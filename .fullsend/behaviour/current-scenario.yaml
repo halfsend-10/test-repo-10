@@ -1,17 +1,9 @@
 ops:
-    - description: Prove bash routing
+    - description: Review payload present
+      op: assert_json
+      args: .fullsend/dispatch/event-payload.json,pull_request.number
+    - description: Prove review execution
       op: write_fixture
-      args: output/bash-routing-ok.json, fixtures/dispatch/ok.json
+      args: output/dispatch-review-ok.json, fixtures/dispatch/ok.json
       content: |
         {"status":"ok","source":"harness-dispatch-behaviour-test"}
-    - description: Emit review JSON
-      op: write_fixture
-      args: output/agent-result.json, fixtures/review/comment.json
-      content: |
-        {
-          "action": "comment",
-          "pr_number": 1,
-          "repo": "owner/repo",
-          "head_sha": "abcdef0123456789abcdef0123456789abcdef01",
-          "body": "Behaviour smoke: bash-routed review completed."
-        }
